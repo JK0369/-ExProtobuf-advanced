@@ -13,7 +13,7 @@
 		4A2E93172895194F0025A14E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A2E93152895194F0025A14E /* Main.storyboard */; };
 		4A2E9319289519510025A14E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A2E9318289519510025A14E /* Assets.xcassets */; };
 		4A2E931C289519510025A14E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A2E931A289519510025A14E /* LaunchScreen.storyboard */; };
-		4A9FCB9928951CFC00DA265A /* DataModel.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FCB9828951CFC00DA265A /* DataModel.pb.swift */; };
+		4AA3EA322897D23F007468EA /* DataModel.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3EA312897D23F007468EA /* DataModel.pb.swift */; };
 		7C809C9CB3C0644901E7945C /* Pods_ExMyTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F66CF2E183AFC753A975B54 /* Pods_ExMyTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +28,7 @@
 		4A2E9318289519510025A14E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A2E931B289519510025A14E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A2E931D289519510025A14E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4A9FCB9828951CFC00DA265A /* DataModel.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.pb.swift; sourceTree = SOURCE_ROOT; };
+		4AA3EA312897D23F007468EA /* DataModel.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.pb.swift; sourceTree = "<group>"; };
 		D3F6A659CE661B1D08F187EE /* Pods-ExMyTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExMyTest.debug.xcconfig"; path = "Target Support Files/Pods-ExMyTest/Pods-ExMyTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,16 +65,24 @@
 		4A2E930E2895194F0025A14E /* ExMyTest */ = {
 			isa = PBXGroup;
 			children = (
+				4AA3EA302897D23F007468EA /* Protobuf */,
 				4A2E930F2895194F0025A14E /* AppDelegate.swift */,
 				4A2E93112895194F0025A14E /* SceneDelegate.swift */,
 				4A2E93132895194F0025A14E /* ViewController.swift */,
-				4A9FCB9828951CFC00DA265A /* DataModel.pb.swift */,
 				4A2E93152895194F0025A14E /* Main.storyboard */,
 				4A2E9318289519510025A14E /* Assets.xcassets */,
 				4A2E931A289519510025A14E /* LaunchScreen.storyboard */,
 				4A2E931D289519510025A14E /* Info.plist */,
 			);
 			path = ExMyTest;
+			sourceTree = "<group>";
+		};
+		4AA3EA302897D23F007468EA /* Protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				4AA3EA312897D23F007468EA /* DataModel.pb.swift */,
+			);
+			path = Protobuf;
 			sourceTree = "<group>";
 		};
 		680F6434199E616687E45083 /* Frameworks */ = {
@@ -101,6 +109,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A2E9320289519510025A14E /* Build configuration list for PBXNativeTarget "ExMyTest" */;
 			buildPhases = (
+				4AA3EA332897D302007468EA /* ShellScript */,
 				A91B54DB634759524681A727 /* [CP] Check Pods Manifest.lock */,
 				4A2E93082895194F0025A14E /* Sources */,
 				4A2E93092895194F0025A14E /* Frameworks */,
@@ -180,6 +189,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ExMyTest/Pods-ExMyTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4AA3EA332897D302007468EA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Run Protobuf\"\ncd Protobuf\nfind . -name \"*pb.swift\" -exec rm {} \\;\nprotoc --swift_out=. ./*.proto\n\necho \"------------------------Success Generate-------------------------\" # <-\nfind . -name \"*pb.swift\" -exec ls {} \\;\necho \"-----------------------------------------------------------------\"\nfind . -name \"*pb.swift\" -exec mv {} ../ExMyTest/Protobuf \\;\n";
+		};
 		A91B54DB634759524681A727 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -209,10 +235,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A9FCB9928951CFC00DA265A /* DataModel.pb.swift in Sources */,
 				4A2E93142895194F0025A14E /* ViewController.swift in Sources */,
 				4A2E93102895194F0025A14E /* AppDelegate.swift in Sources */,
 				4A2E93122895194F0025A14E /* SceneDelegate.swift in Sources */,
+				4AA3EA322897D23F007468EA /* DataModel.pb.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
