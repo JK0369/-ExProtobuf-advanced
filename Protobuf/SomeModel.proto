@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package my.company.proto;
+
+option swift_prefix="PB";
+
+message SomeModel {
+   int64 id = 1;
+   string title = 2;
+   string author = 3;
+}
